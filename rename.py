@@ -35,7 +35,7 @@ class PhotoRenamer(QMainWindow):
         self.load_next_image()
 
     def load_next_image(self):
-        image_files = [f for f in os.listdir('download') if f.endswith('.jpg') or f.endswith('.png')]
+        image_files = [f for f in os.listdir('download') if f.endswith('.jpg') or f.endswith('.png')or f.endswith('.jpeg')]
         if len(image_files) > 0:
             next_image_path = os.path.join('download', image_files[0])
             pixmap = QPixmap(next_image_path)
@@ -44,6 +44,7 @@ class PhotoRenamer(QMainWindow):
             # 使用PIL库来调整图片大小为原来的1/3
             image = Image.open(self.current_image_path)
             resized_image = image.resize((image.width // 3, image.height // 3))
+            resized_image = resized_image.convert('RGB')
             resized_image.save('temp_image.jpg')  # 保存临时的缩小后的图片
             pixmap = QPixmap('temp_image.jpg')
 
@@ -57,6 +58,7 @@ class PhotoRenamer(QMainWindow):
             new_filename = self.input_text.text() + '.jpg'  # You can change the extension if needed
             new_path = os.path.join('output', new_filename)
             image = Image.open(self.current_image_path)
+            image = image.convert('RGB')
             image.save(new_path)
             os.remove(self.current_image_path)
             os.remove('temp_image.jpg')  # 删除临时的缩小后的图片

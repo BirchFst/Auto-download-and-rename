@@ -13,6 +13,8 @@ if not os.path.exists("./url.txt"):
 else:
     urls = open("./url.txt").readlines()
 
+    a = 0
     for url in urls:
         print("Start downloading...")
-        wget.download(url,out="./download")
+        a+=1
+        wget.download(url,out="./download/"+str(a)+".jpg")
